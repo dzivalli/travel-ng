@@ -8,9 +8,9 @@
   function routeConfig($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+        templateUrl: 'app/tour/index.html',
+        controller: 'TourController',
+        controllerAs: 'TourCtrl'
       })
       .otherwise({
         redirectTo: '/'
