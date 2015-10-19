@@ -29,7 +29,7 @@
       $scope.tours[index].edit = false;
     };
 
-    $scope.cancelTour = function(index){
+    $scope.cancelTour = function(){
       $scope.showNewForm = false;
       $scope.newTour = {};
     };
