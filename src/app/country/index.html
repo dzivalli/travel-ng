@@ -1,0 +1,41 @@
+<div class="row">
+  <h4>Countries:</h4>
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="row">
+      <div class="col-sm-7">
+        <input type="text" ng-model="newCountry.name" class="form-control">
+      </div>
+
+      <div class="col-sm-4 pull-right">
+        <button type="button" class="btn btn-block btn-success" ng-click="addCountry()">Add</button>
+      </div>
+    </div>
+
+    <div class="countries-list">
+      <div class="row" ng-repeat="country in countries">
+        <div class="col-sm-6">
+          <div ng-hide="country.edit">
+            {{country.name}}
+          </div>
+
+          <div ng-show="country.edit">
+            <input type="text" class="form-control" ng-model="editedCountry.name" ng-value="country.name">
+          </div>
+        </div>
+
+        <div class="col-sm-6" ng-hide="country.edit">
+          <a href="" class="pull-right" ng-click="deleteCountry($index)">Delete</a>
+          <a href="" class="pull-right" ng-click="editCountry($index)">Edit</a>
+        </div>
+
+        <div class="col-sm-6" ng-show="country.edit">
+          <button type="button" class="btn btn-primary pull-right" ng-click="saveCountry($index)">Save</button>
+          <button type="button" class="btn btn-primary pull-right" ng-click="country.edit=false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
