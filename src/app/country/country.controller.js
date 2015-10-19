@@ -7,6 +7,7 @@
 
   function CountryController($scope) {
     $scope.countries = [];
+    window.countries = $scope.countries;
 
     $scope.addCountry = function() {
       $scope.countries.push(angular.copy($scope.newCountry));

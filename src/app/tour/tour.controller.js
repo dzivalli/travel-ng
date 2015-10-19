@@ -8,6 +8,7 @@
   function TourController($scope) {
     $scope.showNewForm = false;
     $scope.tours = [];
+    $scope.countries = window.countries;
 
     $scope.addTour = function() {
       $scope.showNewForm = false;
