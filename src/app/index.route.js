@@ -12,6 +12,10 @@
         controller: 'TourController',
         controllerAs: 'TourCtrl'
       })
+      .when('/countries', {
+        templateUrl: 'app/country/index.html',
+        controller: 'CountryController'
+      })
       .otherwise({
         redirectTo: '/'
       });
