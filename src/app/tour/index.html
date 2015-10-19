@@ -26,6 +26,17 @@
   </div>
 
   <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <select class="form-control" ng-model="newTour.country_index">
+          <option value="" disabled selected>Select country</option>
+          <option ng-repeat="country in countries" value="{{$index}}">{{country.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
         <textarea class="form-control" placeholder="Description" rows="4" ng-model="newTour.text"></textarea>
@@ -55,6 +66,14 @@
         <div class="col-sm-3">
           <div ng-hide="tour.edit">{{tour.title}}</div>
           <input type="text" ng-model="editedTour.title" ng-show="tour.edit">
+        </div>
+
+        <div class="col-sm-3">
+          <span ng-hide="tour.edit" class="label label-primary">{{countries[tour.country_index].name}}</span>
+          <select class="form-control" ng-model="editedTour.country_index" ng-show="tour.edit">
+            <option value="{{tour.country_index}}" selected>{{countries[tour.country_index].name}}</option>
+            <option ng-repeat="country in countries" value="{{$index}}">{{country.name}}</option>
+          </select>
         </div>
 
         <div class="col-sm-1 pull-right">
