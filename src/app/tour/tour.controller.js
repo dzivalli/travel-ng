@@ -7,10 +7,12 @@
 
   function TourController($scope) {
     $scope.showNewForm = false;
+    $scope.tours = [];
 
     $scope.addTour = function() {
       $scope.showNewForm = false;
       $scope.tours.push(angular.copy($scope.newTour));
+      $scope.newTour = {};
     };
 
     $scope.deleteTour = function(index) {
@@ -25,6 +27,11 @@
     $scope.saveTour = function(index) {
       $scope.tours[index] = angular.copy($scope.editedTour);
       $scope.tours[index].edit = false;
+    };
+
+    $scope.cancelTour = function(index){
+      $scope.showNewForm = false;
+      $scope.newTour = {};
     };
   }
 })();
