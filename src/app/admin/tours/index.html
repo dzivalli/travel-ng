@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
-        <input class="form-control" placeholder="Cost" ng-model="newTour.price">
+        <input type="number" class="form-control" placeholder="Cost" ng-model="newTour.price">
       </div>
     </div>
   </div>
@@ -28,9 +28,9 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
-        <select class="form-control" ng-model="newTour.country_index">
+        <select class="form-control" ng-model="newTour.countryObjectId">
           <option value="" disabled selected>Select country</option>
-          <option ng-repeat="country in countries" value="{{$index}}">{{country.name}}</option>
+          <option ng-repeat="country in countries" value="{{country.objectId}}">{{country.name}}</option>
         </select>
       </div>
     </div>
@@ -69,16 +69,16 @@
         </div>
 
         <div class="col-sm-3">
-          <span ng-hide="tour.edit" class="label label-primary">{{countries[tour.country_index].name}}</span>
-          <select class="form-control" ng-model="editedTour.country_index" ng-show="tour.edit">
-            <option value="{{tour.country_index}}" selected>{{countries[tour.country_index].name}}</option>
-            <option ng-repeat="country in countries" value="{{$index}}">{{country.name}}</option>
+          <span ng-hide="tour.edit" class="label label-primary">{{countryByObjectId(tour.country.objectId).name}}</span>
+          <select class="form-control" ng-model="editedTour.countryObjectId" ng-show="tour.edit">
+            <option value="" selected>{{countryByObjectId(tour.country.objectId).name}}</option>
+            <option ng-repeat="country in countries" value="{{country.objectId}}">{{country.name}}</option>
           </select>
         </div>
 
         <div class="col-sm-1 pull-right">
           <div ng-hide="tour.edit">{{tour.price}}</div>
-          <input type="text" ng-model="editedTour.price" ng-show="tour.edit">
+          <input type="number" ng-model="editedTour.price" ng-show="tour.edit">
         </div>
       </div>
 
