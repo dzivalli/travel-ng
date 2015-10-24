@@ -34,6 +34,15 @@
         </select>
       </div>
     </div>
+
+    <div class="col-sm-4">
+      <div class="form-group">
+        <select class="form-control" ng-model="newTour.placeObjectId">
+          <option value="" disabled selected>Select place</option>
+          <option ng-repeat="place in places" value="{{place.objectId}}">{{place.name}}</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -69,10 +78,18 @@
         </div>
 
         <div class="col-sm-3">
-          <span ng-hide="tour.edit" class="label label-primary">{{countryByObjectId(tour.country.objectId).name}}</span>
+          <span ng-hide="tour.edit" class="label label-primary">{{objectByObjectId(countries, tour.country.objectId).name}}</span>
           <select class="form-control" ng-model="editedTour.countryObjectId" ng-show="tour.edit">
-            <option value="" selected>{{countryByObjectId(tour.country.objectId).name}}</option>
-            <option ng-repeat="country in countries" value="{{country.objectId}}">{{country.name}}</option>
+            <option value="" selected>{{objectByObjectId(countries, tour.country.objectId).name}}</option>
+            <option ng-repeat="country in countries | filter: '!' + tour.country.objectId" value="{{country.objectId}}">{{country.name}}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-3">
+          <span ng-hide="tour.edit" class="label label-warning">{{objectByObjectId(places, tour.place.objectId).name}}</span>
+          <select class="form-control" ng-model="editedTour.placeObjectId" ng-show="tour.edit">
+            <option value="" selected>{{objectByObjectId(places, tour.place.objectId).name}}</option>
+            <option ng-repeat="place in places | filter: '!' + tour.place.objectId" value="{{place.objectId}}">{{place.name}}</option>
           </select>
         </div>
 
