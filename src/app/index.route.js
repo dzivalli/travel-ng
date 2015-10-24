@@ -17,6 +17,10 @@
         templateUrl: 'app/admin/countries/index.html',
         controller: 'CountriesController'
       })
+      .when('/admin/places', {
+        templateUrl: 'app/admin/places/index.html',
+        controller: 'PlacesController'
+      })
       .when('/tours', {
         templateUrl: 'app/tours/index.html',
         controller: 'ToursController'
