@@ -1,0 +1,41 @@
+<div class="row">
+  <h4>Places:</h4>
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="row">
+      <div class="col-sm-7">
+        <input type="text" ng-model="newPlace.name" class="form-control">
+      </div>
+
+      <div class="col-sm-4 pull-right">
+        <button type="button" class="btn btn-block btn-success" ng-click="addPlace()">Add</button>
+      </div>
+    </div>
+
+    <div class="places-list">
+      <div class="row" ng-repeat="place in places">
+        <div class="col-sm-6">
+          <div ng-hide="place.edit">
+            {{place.name}}
+          </div>
+
+          <div ng-show="place.edit">
+            <input type="text" class="form-control" ng-model="editedPlace.name" ng-value="place.name">
+          </div>
+        </div>
+
+        <div class="col-sm-6" ng-hide="place.edit">
+          <a href="" class="pull-right" ng-click="deletePlace($index)">Delete</a>
+          <a href="" class="pull-right" ng-click="editPlace($index)">Edit</a>
+        </div>
+
+        <div class="col-sm-6" ng-show="place.edit">
+          <button type="button" class="btn btn-primary pull-right" ng-click="savePlace($index)">Save</button>
+          <button type="button" class="btn btn-primary pull-right" ng-click="place.edit=false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
