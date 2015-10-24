@@ -41,7 +41,6 @@
       var countryPointer = pointerObject($scope.newTour.countryObjectId, 'country');
       var placePointer = pointerObject($scope.newTour.placeObjectId, 'place');
       var mergedTour = angular.extend($scope.newTour, countryPointer, placePointer);
-      console.log(mergedTour);
 
       Tour.save(serializeTour(mergedTour), function() {
         $scope.showNewForm = false;

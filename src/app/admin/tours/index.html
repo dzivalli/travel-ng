@@ -20,6 +20,14 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
+        <input type="number" class="form-control" placeholder="Duration" ng-model="newTour.duration">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
         <input type="number" class="form-control" placeholder="Cost" ng-model="newTour.price">
       </div>
     </div>
@@ -91,6 +99,11 @@
             <option value="" selected>{{objectByObjectId(places, tour.place.objectId).name}}</option>
             <option ng-repeat="place in places | filter: '!' + tour.place.objectId" value="{{place.objectId}}">{{place.name}}</option>
           </select>
+        </div>
+
+        <div class="col-sm-3">
+          <div ng-hide="tour.edit">duration: {{tour.duration}}</div>
+          <input type="number" ng-model="editedTour.duration" ng-show="tour.edit">
         </div>
 
         <div class="col-sm-1 pull-right">
