@@ -3,9 +3,7 @@
 
   angular
     .module('travelNg')
-    .config(routeConfig)
-    .config(httpConfig)
-    .config(locationConfig);
+    .config(routeConfig);
 
   function routeConfig($routeProvider) {
     $routeProvider
@@ -33,16 +31,4 @@
         redirectTo: '/tours'
       });
   }
-
-  function httpConfig($httpProvider) {
-    $httpProvider.defaults.headers.common = {
-      'X-Parse-Application-Id': 'P3yrQQP1Ski2sA6eMuEcXLTugsntCXkDdhseyk13',
-      'X-Parse-REST-API-Key': 'MHnGP58WItHoXAJOpyiAh71gZQfJPEnabHcnbps5'
-    }
-  }
-
-  function locationConfig($locationProvider) {
-    $locationProvider.html5Mode(true);
-  }
-
 })();
