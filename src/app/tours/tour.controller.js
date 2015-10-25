@@ -16,8 +16,14 @@
       { objectId: '@objectId' }
     );
 
+    var Place = $resource(
+      'https://api.parse.com/1/classes/Place/:objectId',
+      { objectId: '@objectId' }
+    );
+
     $scope.tour = Tour.get({objectId: $routeParams.slug}, function(data) {
       $scope.country = Country.get({objectId: data.country.objectId});
+      $scope.place = Place.get({objectId: data.place.objectId});
     });
   }
 })();
