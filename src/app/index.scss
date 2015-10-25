@@ -37,3 +37,11 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 .container {
   margin-top: 50px;
 }
+
+.tours-list, .countries-list, .places-list {
+  margin-top: 20px;
+
+  a, button {
+    margin-left: 10px;
+  }
+}

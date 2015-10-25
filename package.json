@@ -1,7 +1,9 @@
 {
   "name": "travelNg",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "connect-history-api-fallback": "^1.1.0"
+  },
   "scripts": {
     "test": "gulp test"
   },
