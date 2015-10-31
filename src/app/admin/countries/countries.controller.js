@@ -6,12 +6,12 @@
     .controller('CountriesController', CountriesController);
 
   function CountriesController($scope, $resource) {
-    var parseResult = function (data, headersGetter) {
+    var parseResult = function (data) {
       data = angular.fromJson(data);
       return data.results;
     };
 
-    var Country = new $resource(
+    var Country = $resource(
       'https://api.parse.com/1/classes/Country/:objectId',
       { objectId: '@objectId' },
       {
@@ -32,7 +32,7 @@
     $scope.deleteCountry = function(index) {
       Country.delete({objectId: $scope.countries[index].objectId}, function(index) {
         $scope.countries.splice(index, 1);
-      })
+      });
     };
 
     $scope.editCountry = function(index) {
@@ -50,7 +50,7 @@
 
     var serializeCountry = function(country) {
       delete country.edit;
-      return country
-    }
+      return country;
+    };
   }
 })();

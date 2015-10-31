@@ -19,7 +19,7 @@
     $httpProvider.defaults.headers.common = {
       'X-Parse-Application-Id': 'P3yrQQP1Ski2sA6eMuEcXLTugsntCXkDdhseyk13',
       'X-Parse-REST-API-Key': 'MHnGP58WItHoXAJOpyiAh71gZQfJPEnabHcnbps5'
-    },
+    };
 
     $locationProvider.html5Mode(true);
   }

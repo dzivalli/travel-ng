@@ -6,12 +6,12 @@
     .controller('PlacesController', PlacesController);
 
   function PlacesController($scope, $resource) {
-    var parseResult = function (data, headersGetter) {
+    var parseResult = function (data) {
       data = angular.fromJson(data);
       return data.results;
     };
 
-    var Place = new $resource(
+    var Place = $resource(
       'https://api.parse.com/1/classes/Place/:objectId',
       { objectId: '@objectId' },
       {
@@ -32,7 +32,7 @@
     $scope.deletePlace = function(index) {
       Place.delete({objectId: $scope.places[index].objectId}, function(index) {
         $scope.places.splice(index, 1);
-      })
+      });
     };
 
     $scope.editPlace = function(index) {
@@ -50,7 +50,7 @@
 
     var serializePlace = function(place) {
       delete place.edit;
-      return place
-    }
+      return place;
+    };
   }
 })();

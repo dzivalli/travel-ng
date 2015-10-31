@@ -97,7 +97,7 @@
           "objectId": objectId
         };
 
-        return obj
+        return obj;
       } else {
         return {};
       }
