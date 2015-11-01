@@ -5,21 +5,7 @@
     .module('travelNg')
     .controller('CountriesController', CountriesController);
 
-  function CountriesController($scope, $resource) {
-    var parseResult = function (data) {
-      data = angular.fromJson(data);
-      return data.results;
-    };
-
-    var Country = $resource(
-      'https://api.parse.com/1/classes/Country/:objectId',
-      { objectId: '@objectId' },
-      {
-        query: { isArray: true, transformResponse: parseResult },
-        update: { method: 'PUT' }
-      }
-    );
-
+  function CountriesController($scope, Country) {
     $scope.countries = Country.query();
 
     $scope.addCountry = function() {

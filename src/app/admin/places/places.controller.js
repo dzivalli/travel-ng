@@ -5,21 +5,7 @@
     .module('travelNg')
     .controller('PlacesController', PlacesController);
 
-  function PlacesController($scope, $resource) {
-    var parseResult = function (data) {
-      data = angular.fromJson(data);
-      return data.results;
-    };
-
-    var Place = $resource(
-      'https://api.parse.com/1/classes/Place/:objectId',
-      { objectId: '@objectId' },
-      {
-        query: { isArray: true, transformResponse: parseResult },
-        update: { method: 'PUT' }
-      }
-    );
-
+  function PlacesController($scope, Place) {
     $scope.places = Place.query();
 
     $scope.addPlace = function() {

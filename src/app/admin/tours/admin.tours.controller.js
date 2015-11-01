@@ -5,33 +5,7 @@
     .module('travelNg')
     .controller('AdminToursController', AdminToursController);
 
-  function AdminToursController($scope, $resource) {
-    var parseResult = function(data) {
-      data = angular.fromJson(data);
-      return data.results;
-    };
-
-    var Tour = $resource(
-      'https://api.parse.com/1/classes/Tour/:objectId',
-      { objectId: '@objectId' },
-      {
-        query: { isArray: true, transformResponse: parseResult },
-        update: { method: 'PUT' }
-      }
-    );
-
-    var Country = $resource(
-      'https://api.parse.com/1/classes/Country/:objectId',
-      { objectId: '@objectId' },
-      { query: { isArray: true, transformResponse: parseResult } }
-    );
-
-    var Place = $resource(
-      'https://api.parse.com/1/classes/Place/:objectId',
-      { objectId: '@objectId' },
-      { query: { isArray: true, transformResponse: parseResult } }
-    );
-
+  function AdminToursController($scope, Tour, Country, Place) {
     $scope.showNewForm = false;
     $scope.tours = Tour.query();
     $scope.countries = Country.query();
