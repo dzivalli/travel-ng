@@ -1,0 +1,75 @@
+<div class="row">
+  <h4>Hotels:</h4>
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="row">
+      <div class="col-sm-3">
+        <input type="text" ng-model="newHotel.title" class="form-control">
+      </div>
+
+      <div class="col-sm-3">
+        <input type="number" ng-model="newHotel.stars" class="form-control">
+      </div>
+
+      <div class="col-sm-3">
+        <select ng-model="newHotel.tour" ng-options="tour.title for tour in tours track by tour.objectId" class="form-control">
+          <option value="">Select tour</option>
+        </select>
+      </div>
+
+      <div class="col-sm-3 pull-right">
+        <button type="button" class="btn btn-block btn-success" ng-click="addHotel()">Add</button>
+      </div>
+    </div>
+
+    <div class="hotels-list">
+      <div class="row" ng-repeat="hotel in hotels">
+        <div class="col-sm-3">
+          <div ng-hide="hotel.edit">
+            {{hotel.title}}
+          </div>
+
+          <div ng-show="hotel.edit">
+            <input type="text" class="form-control" ng-model="editedHotel.title">
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div ng-hide="hotel.edit">
+            {{hotel.stars}}
+          </div>
+
+          <div ng-show="hotel.edit">
+            <input type="number" class="form-control" ng-model="editedHotel.stars">
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div ng-hide="hotel.edit" >
+            <spae class="label label-primary">
+              {{getTour(hotel.tour.objectId).title}}
+            </spae>
+          </div>
+
+          <div ng-show="hotel.edit">
+            <select ng-model="editedHotel.tour"
+                    ng-options="tour.title for tour in tours track by tour.objectId"
+                    class="form-control"></select>
+          </div>
+        </div>
+
+        <div class="col-sm-3" ng-hide="hotel.edit">
+          <a href="" class="pull-right" ng-click="deleteHotel($index)">Delete</a>
+          <a href="" class="pull-right" ng-click="editHotel($index)">Edit</a>
+        </div>
+
+        <div class="col-sm-3" ng-show="hotel.edit">
+          <button type="button" class="btn btn-primary pull-right" ng-click="saveHotel($index)">Save</button>
+          <button type="button" class="btn btn-primary pull-right" ng-click="hotel.edit=false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
