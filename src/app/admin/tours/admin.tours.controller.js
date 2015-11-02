@@ -5,20 +5,21 @@
     .module('travelNg')
     .controller('AdminToursController', AdminToursController);
 
-  function AdminToursController($scope, Tour, Country, Place) {
+  function AdminToursController($scope, Tour, Country, Place, parseCom) {
     $scope.showNewForm = false;
     $scope.tours = Tour.query();
     $scope.countries = Country.query();
-    $scope.places = Place.query();
+    var places = Place.query();
 
     $scope.addTour = function() {
-      var countryPointer = pointerObject($scope.newTour.countryObjectId, 'country');
-      var placePointer = pointerObject($scope.newTour.placeObjectId, 'place');
-      var mergedTour = angular.extend($scope.newTour, countryPointer, placePointer);
+      var tour = angular.copy($scope.newTour);
+      tour.country = parseCom.pointer($scope.newTour.country.objectId, 'country');
+      tour.place = parseCom.pointer($scope.newTour.place.objectId, 'place');
+      delete tour.edit;
 
-      Tour.save(serializeTour(mergedTour), function() {
+      Tour.save(tour, function() {
         $scope.showNewForm = false;
-        $scope.tours.push(angular.copy($scope.newTour));
+        $scope.tours.push(tour);
         $scope.newTour = {};
       });
     };
@@ -35,12 +36,13 @@
     };
 
     $scope.saveTour = function(index) {
-      var countryPointer = pointerObject($scope.editedTour.countryObjectId, 'country');
-      var placePointer = pointerObject($scope.editedTour.placeObjectId, 'place');
-      var mergedTour = angular.extend($scope.editedTour, countryPointer, placePointer);
+      var tour = angular.copy($scope.editedTour);
+      tour.country = parseCom.pointer($scope.editedTour.country.objectId, 'country');
+      tour.place = parseCom.pointer($scope.editedTour.place.objectId, 'place');
+      delete tour.edit;
 
-      Tour.update(serializeTour(mergedTour), function() {
-        $scope.tours[index] = angular.copy($scope.editedTour);
+      Tour.update(tour, function() {
+        $scope.tours[index] = angular.copy(tour);
         $scope.tours[index].edit = false;
       });
     };
@@ -50,43 +52,19 @@
       $scope.newTour = {};
     };
 
-    $scope.objectByObjectId = function(objectsList, objectId) {
-      var obj = {};
-
-      angular.forEach(objectsList, function(val) {
-        if (val.objectId === objectId) {
-          obj = val;
-        }
-      });
-      return obj;
+    $scope.getPlace = function(objectId) {
+      return _.find(places, { objectId: objectId });
     };
 
-    var pointerObject = function(objectId, className) {
-      var obj = {};
-
-      if (objectId) {
-        obj[className] = {
-          "__type":"Pointer",
-          "className": capitalize(className),
-          "objectId": objectId
-        };
-
-        return obj;
+    $scope.getCountry = function(objectId) {
+      return _.find($scope.countries, { objectId: objectId });
+    };
+    $scope.selectCountry = function(country) {
+      if (country) {
+        $scope.placesByCountry = _.where(places, {country: {objectId: country.objectId}});
       } else {
-        return {};
+        $scope.placesByCountry = {};
       }
-
-    };
-
-    var capitalize = function(name) {
-      return name.replace(/^./, name[0].toUpperCase());
-    };
-
-    var serializeTour = function(tour) {
-      delete tour.edit;
-      delete tour.countryObjectId;
-      delete tour.placeObjectId;
-      return tour;
     };
   }
 })();
