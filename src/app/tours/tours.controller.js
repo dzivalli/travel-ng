@@ -6,38 +6,46 @@
     .controller('ToursController', ToursController);
 
   function ToursController($scope, Tour, Country, Place) {
-    $scope.tours = Tour.query(function(data){
+
+    var tours = Tour.query(function(data){
       $scope.selectedTours = data;
     });
 
     $scope.countries = Country.query();
-    $scope.places = Place.query();
 
-    $scope.objectByObjectId = function(objectsList, objectId) {
-      var obj = {};
+    var places = Place.query();
 
-      angular.forEach(objectsList, function(val) {
-        if (val.objectId === objectId) {
-          obj = val;
-        }
-      });
-      return obj;
+
+    $scope.getPlace = function(objectId) {
+      return _.find(places, { objectId: objectId });
     };
 
-    $scope.toursBy = function(objectName) {
-      var tours = [];
+    $scope.getCountry = function(objectId) {
+      return _.find($scope.countries, { objectId: objectId });
+    };
 
-      if ($scope.chosenItem === '') {
-        $scope.selectedTours = $scope.tours;
+    $scope.selectCountry = function() {
+      if ($scope.country) {
+        $scope.placesByCountry = _.where(places, {country: {objectId: $scope.country.objectId}});
+        $scope.selectedTours = _.where(tours, {country: {objectId: $scope.country.objectId}})
       } else {
-        angular.forEach($scope.tours, function(val) {
-          if (val[objectName] && (val[objectName].objectId === $scope.chosenItem)) {
-            tours.push(val);
-          }
-        });
-
+        $scope.placesByCountry = {};
         $scope.selectedTours = tours;
       }
     };
+
+    $scope.selectPlace = function() {
+      if ($scope.place) {
+        $scope.selectedTours = _.where(
+          tours,
+          {
+            country: { objectId: $scope.country.objectId },
+            place: { objectId: $scope.place.objectId }
+          }
+        )
+      } else {
+        $scope.selectedTours = _.where(tours, {country: {objectId: $scope.country.objectId}})
+      }
+    }
   }
 })();
