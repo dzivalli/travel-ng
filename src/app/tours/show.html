@@ -12,7 +12,9 @@
   <div class="col-sm-9">
     <div class="row">
       <div class="col-sm-3">
-        {{tour.title}}
+        <h4>
+          {{tour.title}}
+        </h4>
       </div>
 
       <div class="col-sm-3">
@@ -29,6 +31,16 @@
 
       <div class="col-sm-1 pull-right">
         <div>{{tour.price}}</div>
+      </div>
+    </div>
+
+    <div class="row" ng-show="hotel">
+      <div class="col-sm-4">
+        <strong>{{hotel.title}}</strong>
+      </div>
+
+      <div class="col-sm-4">
+        Stars: {{hotel.stars}}
       </div>
     </div>
 

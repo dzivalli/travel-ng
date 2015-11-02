@@ -24,30 +24,42 @@
 
 <div class="tours-list" ng-repeat="tour in selectedTours">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <img src="assets/images/default.png">
     </div>
 
-    <div class="col-sm-9">
+    <div class="col-sm-8">
       <div class="row">
-        <div class="col-sm-3">
-          <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
+        <div class="col-sm-4">
+          <h4>
+            <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
+          </h4>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <span class="label label-primary">{{getCountry(tour.country.objectId).name}}</span>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <span class="label label-warning">{{getPlace(tour.place.objectId).name}}</span>
         </div>
 
-        <div class="col-sm-3 ">
+        <div class="col-sm-2 ">
           <div>duration: {{tour.duration}}</div>
         </div>
 
         <div class="col-sm-1 pull-right">
           <div>{{tour.price}}</div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="getHotelByTourId(tour.objectId)">
+        <div class="col-sm-4">
+         <strong>{{getHotelByTourId(tour.objectId).title}}</strong>
+        </div>
+
+        <div class="col-sm-4">
+          Stars: {{getHotelByTourId(tour.objectId).stars}}
         </div>
       </div>
 
