@@ -39,5 +39,16 @@
         return {};
       }
     };
+
+    this.objectByTour = function(tourObjectId) {
+      return {
+        where: {
+          "tour":{
+            "__type":"Pointer",
+            "className":"Tour","objectId":tourObjectId
+          }
+        }
+      }
+    }
   }
 })();
