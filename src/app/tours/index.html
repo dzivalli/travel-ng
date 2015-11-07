@@ -7,17 +7,15 @@
     <div class="form-inline">
       <div class="form-group">
         <label>Select country:</label>
-        <select class="form-control" ng-model="chosenItem" ng-change="toursBy('country')">
+        <select class="form-control" ng-model="country" ng-options="country.name for country in countries track by country.objectId" ng-change="selectCountry()">
           <option value="" selected>All countries</option>
-          <option ng-repeat="country in countries" value="{{country.objectId}}">{{country.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label>Select place:</label>
-        <select class="form-control" ng-model="chosenItem" ng-change="toursBy('place')">
+        <select class="form-control" ng-model="place" ng-options="place.name for place in placesByCountry track by place.objectId" ng-change="selectPlace()">
           <option value="" selected>All places</option>
-          <option ng-repeat="place in places" value="{{place.objectId}}">{{place.name}}</option>
         </select>
       </div>
     </div>
@@ -26,30 +24,42 @@
 
 <div class="tours-list" ng-repeat="tour in selectedTours">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <img src="assets/images/default.png">
     </div>
 
-    <div class="col-sm-9">
+    <div class="col-sm-8">
       <div class="row">
-        <div class="col-sm-3">
-          <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
+        <div class="col-sm-4">
+          <h4>
+            <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
+          </h4>
         </div>
 
-        <div class="col-sm-3">
-          <span class="label label-primary">{{objectByObjectId(countries, tour.country.objectId).name}}</span>
+        <div class="col-sm-2">
+          <span class="label label-primary">{{getCountry(tour.country.objectId).name}}</span>
         </div>
 
-        <div class="col-sm-3">
-          <span class="label label-warning">{{objectByObjectId(places, tour.place.objectId).name}}</span>
+        <div class="col-sm-2">
+          <span class="label label-warning">{{getPlace(tour.place.objectId).name}}</span>
         </div>
 
-        <div class="col-sm-3 ">
+        <div class="col-sm-2 ">
           <div>duration: {{tour.duration}}</div>
         </div>
 
         <div class="col-sm-1 pull-right">
           <div>{{tour.price}}</div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="getHotelByTourId(tour.objectId)">
+        <div class="col-sm-4">
+         <strong>{{getHotelByTourId(tour.objectId).title}}</strong>
+        </div>
+
+        <div class="col-sm-4">
+          Stars: {{getHotelByTourId(tour.objectId).stars}}
         </div>
       </div>
 

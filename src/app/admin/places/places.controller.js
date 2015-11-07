@@ -5,34 +5,29 @@
     .module('travelNg')
     .controller('PlacesController', PlacesController);
 
-  function PlacesController($scope, $resource) {
-    var parseResult = function (data, headersGetter) {
-      data = angular.fromJson(data);
-      return data.results;
-    };
-
-    var Place = new $resource(
-      'https://api.parse.com/1/classes/Place/:objectId',
-      { objectId: '@objectId' },
-      {
-        query: { isArray: true, transformResponse: parseResult },
-        update: { method: 'PUT' }
-      }
-    );
-
+  function PlacesController($scope, Place, Country, parseCom) {
     $scope.places = Place.query();
+    $scope.countries = Country.query();
 
     $scope.addPlace = function() {
-      Place.save(serializePlace($scope.newPlace), function() {
-        $scope.places.push(angular.copy($scope.newPlace));
+      var place = angular.copy($scope.newPlace);
+      delete place.edit;
+      place.country = parseCom.pointer(place.country.objectId, 'country');
+
+      Place.save(place, function() {
+        $scope.places.push(place);
         $scope.newPlace = {};
       });
+    };
+
+    $scope.getCountry = function(objectId) {
+      return _.find($scope.countries, { objectId: objectId})
     };
 
     $scope.deletePlace = function(index) {
       Place.delete({objectId: $scope.places[index].objectId}, function(index) {
         $scope.places.splice(index, 1);
-      })
+      });
     };
 
     $scope.editPlace = function(index) {
@@ -41,16 +36,15 @@
     };
 
     $scope.savePlace = function(index) {
-      Place.update(serializePlace($scope.editedPlace), function(){
-        $scope.places[index] = angular.copy($scope.editedPlace);
+      var place = angular.copy($scope.editedPlace);
+      delete place.edit;
+      place.country = parseCom.pointer(place.country.objectId, 'country');
+
+      Place.update(place, function(){
+        $scope.places[index] = place;
         $scope.places[index].edit = false;
         $scope.editedPlace = {};
       });
     };
-
-    var serializePlace = function(place) {
-      delete place.edit;
-      return place
-    }
   }
 })();

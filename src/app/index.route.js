@@ -3,9 +3,7 @@
 
   angular
     .module('travelNg')
-    .config(routeConfig)
-    .config(httpConfig)
-    .config(locationConfig);
+    .config(routeConfig);
 
   function routeConfig($routeProvider) {
     $routeProvider
@@ -21,6 +19,10 @@
         templateUrl: 'app/admin/places/index.html',
         controller: 'PlacesController'
       })
+      .when('/admin/hotels', {
+        templateUrl: 'app/admin/hotels/index.html',
+        controller: 'HotelsController'
+      })
       .when('/tours', {
         templateUrl: 'app/tours/index.html',
         controller: 'ToursController'
@@ -33,16 +35,4 @@
         redirectTo: '/tours'
       });
   }
-
-  function httpConfig($httpProvider) {
-    $httpProvider.defaults.headers.common = {
-      'X-Parse-Application-Id': 'P3yrQQP1Ski2sA6eMuEcXLTugsntCXkDdhseyk13',
-      'X-Parse-REST-API-Key': 'MHnGP58WItHoXAJOpyiAh71gZQfJPEnabHcnbps5'
-    }
-  }
-
-  function locationConfig($locationProvider) {
-    $locationProvider.html5Mode(true);
-  }
-
 })();

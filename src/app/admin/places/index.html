@@ -5,8 +5,14 @@
 <div class="row">
   <div class="col-sm-8">
     <div class="row">
-      <div class="col-sm-7">
+      <div class="col-sm-4">
         <input type="text" ng-model="newPlace.name" class="form-control">
+      </div>
+
+      <div class="col-sm-4">
+        <select ng-model="newPlace.country" ng-options="country.name for country in countries track by country.objectId" class="form-control">
+          <option value="">Select country</option>
+        </select>
       </div>
 
       <div class="col-sm-4 pull-right">
@@ -16,22 +22,35 @@
 
     <div class="places-list">
       <div class="row" ng-repeat="place in places">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <div ng-hide="place.edit">
             {{place.name}}
           </div>
 
           <div ng-show="place.edit">
-            <input type="text" class="form-control" ng-model="editedPlace.name" ng-value="place.name">
+            <input type="text" class="form-control" ng-model="editedPlace.name">
           </div>
         </div>
 
-        <div class="col-sm-6" ng-hide="place.edit">
+        <div class="col-sm-4">
+          <div ng-hide="place.edit" >
+            <spae class="label label-primary">
+              {{getCountry(place.country.objectId).name}}
+            </spae>
+          </div>
+
+          <div ng-show="place.edit">
+            <select ng-model="editedPlace.country" ng-options="country.name for country in countries track by country.objectId" class="form-control">
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-4" ng-hide="place.edit">
           <a href="" class="pull-right" ng-click="deletePlace($index)">Delete</a>
           <a href="" class="pull-right" ng-click="editPlace($index)">Edit</a>
         </div>
 
-        <div class="col-sm-6" ng-show="place.edit">
+        <div class="col-sm-4" ng-show="place.edit">
           <button type="button" class="btn btn-primary pull-right" ng-click="savePlace($index)">Save</button>
           <button type="button" class="btn btn-primary pull-right" ng-click="place.edit=false">Cancel</button>
         </div>
