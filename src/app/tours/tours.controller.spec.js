@@ -6,6 +6,7 @@ describe('ToursController', function(){
   var $httpBackend;
   var url = 'https://api.parse.com/1/classes/';
   var countries = [{name: 'Country 1', objectId: "c1" }];
+  var hotels = [{name: 'Hotel 1', objectId: "h1" }];
 
   var tours = [
     {
@@ -62,22 +63,39 @@ describe('ToursController', function(){
     toursController = $controller('ToursController', {$scope: $scope});
     $httpBackend.whenGET(url + 'Tour').respond(200, {results: tours});
     $httpBackend.whenGET(url + 'Country').respond(200, {results: countries});
-    $httpBackend.whenGET(url + 'Hotel').respond(200, {results: []});
+    $httpBackend.whenGET(url + 'Hotel').respond(200, {results: hotels});
     $httpBackend.whenGET(url + 'Place').respond(200, {results: places});
-    $httpBackend.flush();
   }));
 
   describe('initialize', function() {
-    it('gets tours', function() {
-      expect(angular.equals($scope.selectedTours, tours)).toBe(true);
+    describe('when variables belong to scope', function() {
+      beforeEach(function() {
+        $httpBackend.flush()
+      });
+
+      it('gets tours', function() {
+        expect(angular.equals($scope.selectedTours, tours)).toBe(true);
+      });
+
+      it('gets countries', function() {
+        expect(angular.equals($scope.countries, countries)).toBe(true);
+      });
     });
 
-    it('gets countries', function() {
-      expect(angular.equals($scope.countries, countries)).toBe(true);
+    describe('when variables are local', function() {
+      it('queries hotels', function() {
+        $httpBackend.expectGET(url + 'Hotel');
+        $httpBackend.flush();
+        expect($httpBackend.verifyNoOutstandingExpectation).not.toThrow();
+      });
     });
   });
 
   describe('selectCountry', function() {
+    beforeEach(function() {
+      $httpBackend.flush()
+    });
+
     describe('when country is selected', function() {
       beforeEach(function() {
         $scope.country = countries[0];
@@ -110,6 +128,10 @@ describe('ToursController', function(){
   });
 
   describe('selectPlace', function() {
+    beforeEach(function() {
+      $httpBackend.flush()
+    });
+
     beforeEach(function() {
       $scope.country = countries[0];
     });

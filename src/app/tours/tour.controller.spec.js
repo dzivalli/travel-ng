@@ -22,7 +22,7 @@ describe('TourController', function() {
 
   var place = {name: 'Place 1', objectId: 'p1'};
   var country = {name: 'Country 1', objectId: 'c1'};
-  var hotel_raw = {results: [{title: 'Hotel 1', objectId: 'h1'}]};
+  var hotels = [{title: 'Hotel 1', objectId: 'h1'}];
 
   beforeEach(inject(function($controller, _$httpBackend_, $httpParamSerializer, parseCom) {
     $httpBackend = _$httpBackend_;
@@ -30,7 +30,7 @@ describe('TourController', function() {
     $httpBackend.whenGET(url + 'Tour/' + tour.objectId).respond(200, tour);
     $httpBackend.whenGET(url + 'Country/' + tour.country.objectId).respond(200, country);
     $httpBackend.whenGET(url + 'Place/' + tour.place.objectId).respond(200, place);
-    $httpBackend.whenGET(url + 'Hotel?' + $httpParamSerializer(parseCom.objectByTour(tour.objectId))).respond(200, hotel_raw);
+    $httpBackend.whenGET(url + 'Hotel?' + $httpParamSerializer(parseCom.objectByTour(tour.objectId))).respond(200, {results: hotels});
     $httpBackend.flush();
   }));
 
@@ -48,7 +48,7 @@ describe('TourController', function() {
     });
 
     it('gets hotel', function () {
-      expect(angular.equals($scope.hotel, hotel_raw.results[0])).toBe(true);
+      expect(angular.equals($scope.hotel, hotels[0])).toBe(true);
     });
   });
 });
