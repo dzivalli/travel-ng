@@ -1,4 +1,6 @@
 describe('ToursController', function(){
+  'use strict';
+
   beforeEach(module('travelNg'));
 
   var toursController = null;
@@ -70,7 +72,7 @@ describe('ToursController', function(){
   describe('initialize', function() {
     describe('when variables belong to scope', function() {
       beforeEach(function() {
-        $httpBackend.flush()
+        $httpBackend.flush();
       });
 
       it('gets tours', function() {
@@ -93,7 +95,7 @@ describe('ToursController', function(){
 
   describe('selectCountry', function() {
     beforeEach(function() {
-      $httpBackend.flush()
+      $httpBackend.flush();
     });
 
     describe('when country is selected', function() {
@@ -113,7 +115,7 @@ describe('ToursController', function(){
 
     describe('when country is not selected', function() {
       beforeEach(function() {
-        $scope.country = null;
+        $scope.country = {};
         $scope.selectCountry();
       });
 
@@ -129,7 +131,7 @@ describe('ToursController', function(){
 
   describe('selectPlace', function() {
     beforeEach(function() {
-      $httpBackend.flush()
+      $httpBackend.flush();
     });
 
     beforeEach(function() {
@@ -149,7 +151,7 @@ describe('ToursController', function(){
 
     describe('when place is not selected', function() {
       beforeEach(function() {
-        $scope.place = null;
+        $scope.place = {};
         $scope.selectPlace();
       });
 

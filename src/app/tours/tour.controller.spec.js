@@ -1,4 +1,6 @@
 describe('TourController', function() {
+  'use strict';
+
   beforeEach(module('travelNg'));
 
   var tourController = null;

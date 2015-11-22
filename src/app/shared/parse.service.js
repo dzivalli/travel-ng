@@ -48,7 +48,7 @@
             "className":"Tour","objectId":tourObjectId
           }
         }
-      }
-    }
+      };
+    };
   }
 })();

@@ -21,7 +21,7 @@
     };
 
     $scope.getCountry = function(objectId) {
-      return _.find($scope.countries, { objectId: objectId})
+      return _.find($scope.countries, { objectId: objectId});
     };
 
     $scope.deletePlace = function(index) {

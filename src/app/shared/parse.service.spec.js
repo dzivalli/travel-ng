@@ -1,4 +1,6 @@
 describe('parseCom', function() {
+  'use strict';
+
   beforeEach(module('travelNg'));
 
   var parseCom = null;
@@ -28,7 +30,7 @@ describe('parseCom', function() {
         var result = parseCom.object(object).query();
         $httpBackend.flush();
         expect(angular.equals(result, [])).toBe(true);
-      })
+      });
     });
 
     describe('GET', function() {
@@ -53,7 +55,7 @@ describe('parseCom', function() {
     describe('SAVE', function() {
       describe('when new object', function() {
         beforeEach(function() {
-          $httpBackend.whenPOST(url + object).respond(200)
+          $httpBackend.whenPOST(url + object).respond(200);
         });
 
         it('send post', function() {
@@ -61,12 +63,12 @@ describe('parseCom', function() {
           parseCom.object(object).save({title: 'title'});
           $httpBackend.flush();
           expect($httpBackend.verifyNoOutstandingExpectation).not.toThrow();
-        })
+        });
       });
 
       describe('when updates existed object', function() {
         beforeEach(function() {
-          $httpBackend.whenPOST(url + object + '/objectId').respond(200)
+          $httpBackend.whenPOST(url + object + '/objectId').respond(200);
         });
 
         it('send post', function() {
@@ -74,7 +76,7 @@ describe('parseCom', function() {
           parseCom.object(object).save({title: 'title', objectId: 'objectId'});
           $httpBackend.flush();
           expect($httpBackend.verifyNoOutstandingExpectation).not.toThrow();
-        })
+        });
       });
     });
 
