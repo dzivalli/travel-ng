@@ -5,7 +5,7 @@
     .module('travelNg')
     .controller('ToursController', ToursController);
 
-  function ToursController($scope, Tour, Country, Place, Hotel) {
+  function ToursController($scope, Tour, Country, Place, Hotel, search) {
 
     var tours = Tour.query(function(data){
       $scope.selectedTours = data;
@@ -25,31 +25,16 @@
     };
 
     $scope.getHotelByTourId = function(objectId) {
-      return _.find(hotels, {tour: {objectId: objectId}})
+      return _.find(hotels, {tour: {objectId: objectId}});
     };
 
     $scope.selectCountry = function() {
-      if ($scope.country) {
-        $scope.placesByCountry = _.where(places, {country: {objectId: $scope.country.objectId}});
-        $scope.selectedTours = _.where(tours, {country: {objectId: $scope.country.objectId}})
-      } else {
-        $scope.placesByCountry = {};
-        $scope.selectedTours = tours;
-      }
+      $scope.placesByCountry = search.selectPlacesByCountry(places, $scope.country);
+      $scope.selectedTours = search.selectToursByCountry(tours, $scope.country);
     };
 
     $scope.selectPlace = function() {
-      if ($scope.place) {
-        $scope.selectedTours = _.where(
-          tours,
-          {
-            country: { objectId: $scope.country.objectId },
-            place: { objectId: $scope.place.objectId }
-          }
-        )
-      } else {
-        $scope.selectedTours = _.where(tours, {country: {objectId: $scope.country.objectId}})
-      }
-    }
+      $scope.selectedTours = search.selectToursByCountryAndPlace(tours, $scope.country, $scope.place);
+    };
   }
 })();

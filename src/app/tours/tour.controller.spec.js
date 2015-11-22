@@ -1,10 +1,10 @@
 describe('TourController', function() {
+  'use strict';
+
   beforeEach(module('travelNg'));
 
   var tourController = null;
-  var $httpBackend = null;
   var $scope = {};
-  var url = 'https://api.parse.com/1/classes/';
   var tour = {
     title: 'Tour 1',
     objectId: 't1',
@@ -22,33 +22,60 @@ describe('TourController', function() {
 
   var place = {name: 'Place 1', objectId: 'p1'};
   var country = {name: 'Country 1', objectId: 'c1'};
-  var hotels = [{title: 'Hotel 1', objectId: 'h1'}];
+  var hotels_result = {results: [{title: 'Hotel 1', objectId: 'h1'}]};
 
-  beforeEach(inject(function($controller, _$httpBackend_, $httpParamSerializer, parseCom) {
-    $httpBackend = _$httpBackend_;
-    tourController = $controller('TourController', {$scope: $scope, $routeParams: {slug: tour.objectId}});
-    $httpBackend.whenGET(url + 'Tour/' + tour.objectId).respond(200, tour);
-    $httpBackend.whenGET(url + 'Country/' + tour.country.objectId).respond(200, country);
-    $httpBackend.whenGET(url + 'Place/' + tour.place.objectId).respond(200, place);
-    $httpBackend.whenGET(url + 'Hotel?' + $httpParamSerializer(parseCom.objectByTour(tour.objectId))).respond(200, {results: hotels});
-    $httpBackend.flush();
+  beforeEach(inject(function($controller) {
+    var TourMock = {
+      get: function(params, callback) {
+        callback(tour);
+        return tour;
+      }
+    };
+
+    var PlaceMock = {
+      get: function() {
+        return place;
+      }
+    };
+
+    var CountryMock = {
+      get: function() {
+        return country;
+      }
+    };
+
+    var HotelMock = {
+      get: function(params, callback) {
+        callback(hotels_result);
+      }
+    };
+
+    tourController = $controller('TourController',
+      {
+        $scope: $scope,
+        Tour: TourMock,
+        Place: PlaceMock,
+        Country: CountryMock,
+        Hotel: HotelMock
+      }
+    );
   }));
 
   describe('initialize', function() {
     it('gets tour', function() {
-      expect(angular.equals($scope.tour, tour)).toBe(true);
+      expect($scope.tour).toEqual(tour);
     });
 
     it('gets country', function () {
-      expect(angular.equals($scope.country, country)).toBe(true);
+      expect($scope.country).toEqual(country);
     });
 
     it('gets place', function () {
-      expect(angular.equals($scope.place, place)).toBe(true);
+      expect($scope.place).toEqual(place);
     });
 
     it('gets hotel', function () {
-      expect(angular.equals($scope.hotel, hotels[0])).toBe(true);
+      expect($scope.hotel).toEqual(hotels_result.results[0]);
     });
   });
 });

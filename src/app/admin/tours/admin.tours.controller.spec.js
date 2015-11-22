@@ -1,4 +1,6 @@
 describe('AdminToursController', function() {
+  'use strict';
+
   beforeEach(module('travelNg'));
 
   var AdminToursController = null;
@@ -43,7 +45,7 @@ describe('AdminToursController', function() {
         $httpBackend.expectGET(url + 'Place');
         $httpBackend.flush();
         expect($httpBackend.verifyNoOutstandingExpectation).not.toThrow();
-      })
+      });
     });
   });
 

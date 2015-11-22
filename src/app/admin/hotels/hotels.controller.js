@@ -42,9 +42,9 @@
 
       Hotel.update(hotel, function() {
         $scope.hotels[index] = hotel;
-        $scope.editedHotel = {}
-      })
-    }
+        $scope.editedHotel = {};
+      });
+    };
   }
 
 })();
