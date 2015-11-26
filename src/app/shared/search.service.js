@@ -5,7 +5,7 @@
     .module('travelNg')
     .service('search', search);
 
-  function search() {
+  function search(_) {
     this.selectPlacesByCountry = function(places, country) {
       if (country.objectId) {
         return _.where(places, {country: {objectId: country.objectId}});

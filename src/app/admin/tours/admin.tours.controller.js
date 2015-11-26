@@ -5,7 +5,7 @@
     .module('travelNg')
     .controller('AdminToursController', AdminToursController);
 
-  function AdminToursController($scope, Tour, Country, Place, parseCom) {
+  function AdminToursController($scope, Tour, Country, Place, parseCom, _) {
     $scope.showNewForm = false;
     $scope.tours = Tour.query();
     $scope.countries = Country.query();

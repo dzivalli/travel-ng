@@ -5,7 +5,7 @@
     .module('travelNg')
     .controller('ToursController', ToursController);
 
-  function ToursController($scope, Tour, Country, Place, Hotel, search) {
+  function ToursController($scope, Tour, Country, Place, Hotel, search, _) {
 
     var tours = Tour.query(function(data){
       $scope.selectedTours = data;
