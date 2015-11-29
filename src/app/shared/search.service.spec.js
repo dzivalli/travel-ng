@@ -60,8 +60,12 @@ describe('search service', function() {
   }));
 
   describe('selectPlacesByCountry', function() {
-    it('returns empty object if there is now country', function() {
+    it('returns empty object if country is empty object', function() {
       expect(search.selectPlacesByCountry(places, {})).toEqual({});
+    });
+
+    it('returns empty object if country is null', function() {
+      expect(search.selectPlacesByCountry(places, null)).toEqual({});
     });
 
     it('returns places by given country', function() {
@@ -70,8 +74,12 @@ describe('search service', function() {
   });
 
   describe('selectToursByCountry', function() {
-    it('returns all tours if there is now country', function() {
+    it('returns all tours if country is empty object', function() {
       expect(search.selectToursByCountry(tours, {})).toEqual(tours);
+    });
+
+    it('returns all tours if country is null', function() {
+      expect(search.selectToursByCountry(tours, null)).toEqual(tours);
     });
 
     it('returns tours by given country', function() {
@@ -80,8 +88,12 @@ describe('search service', function() {
   });
 
   describe('selectToursByCountryAndPlace', function() {
-    it('returns tours by country if there is no place', function() {
+    it('returns tours by country if place is empty object', function() {
       expect(search.selectToursByCountryAndPlace(tours, country, {})).toEqual([tours[0]]);
+    });
+
+    it('returns tours by country if place is null', function() {
+      expect(search.selectToursByCountryAndPlace(tours, country, null)).toEqual([tours[0]]);
     });
 
     it('returns tours by country and place', function() {
