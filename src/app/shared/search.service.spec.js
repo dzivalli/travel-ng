@@ -73,20 +73,6 @@ describe('search service', function() {
     });
   });
 
-  describe('selectToursByCountry', function() {
-    it('returns all tours if country is empty object', function() {
-      expect(search.selectToursByCountry(tours, {})).toEqual(tours);
-    });
-
-    it('returns all tours if country is null', function() {
-      expect(search.selectToursByCountry(tours, null)).toEqual(tours);
-    });
-
-    it('returns tours by given country', function() {
-      expect(search.selectToursByCountry(tours, country)).toEqual([tours[0]]);
-    });
-  });
-
   describe('selectToursByCountryAndPlace', function() {
     it('returns tours by country if place is empty object', function() {
       expect(search.selectToursByCountryAndPlace(tours, country, {})).toEqual([tours[0]]);
@@ -98,6 +84,10 @@ describe('search service', function() {
 
     it('returns tours by country and place', function() {
       expect(search.selectToursByCountryAndPlace(tours, country, places[0])).toEqual([tours[0]]);
+    });
+
+    it ('returns all tours if country and place are null', function() {
+      expect(search.selectToursByCountryAndPlace(tours, null, null)).toEqual(tours);
     });
   });
 });

@@ -14,14 +14,6 @@
       }
     };
 
-    this.selectToursByCountry = function(tours, country) {
-      if (country && country.objectId) {
-        return _.where(tours, {country: {objectId: country.objectId}});
-      } else {
-        return tours;
-      }
-    };
-
     this.selectToursByCountryAndPlace = function(tours, country, place) {
       if (place && place.objectId) {
         return _.where(
@@ -31,8 +23,10 @@
             place: { objectId: place.objectId }
           }
         );
-      } else {
+      } else if (country && country.objectId) {
         return _.where(tours, {country: {objectId: country.objectId}});
+      } else {
+        return tours;
       }
     };
   }
