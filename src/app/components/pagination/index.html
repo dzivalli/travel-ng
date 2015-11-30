@@ -1,6 +1,6 @@
 <nav>
   <ul class="pagination">
-    <li ng-repeat="i in itemsRange">
+    <li ng-repeat="i in itemsRange" ng-class="{'active': $index == activePage}">
       <a ng-click="page(i)">
         {{i + 1}}
       </a>

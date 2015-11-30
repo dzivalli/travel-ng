@@ -14,6 +14,7 @@
 
           scope.localChanges = true;
           scope.items = allItems.slice(first, last);
+          scope.activePage = index;
         };
 
         scope.$watch('items', function() {
