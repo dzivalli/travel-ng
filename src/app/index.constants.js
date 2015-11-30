@@ -7,6 +7,7 @@
     .constant('malarkey', malarkey)
     .constant('toastr', toastr)
     .constant('moment', moment)
-    .constant('_', _);
+    .constant('_', _)
+    .constant('itemsOnPage', 2);
 
 })();
