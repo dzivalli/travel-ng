@@ -9,11 +9,11 @@
 
         scope.selectCountry = function() {
           scope.placesByCountry = search.selectPlacesByCountry(scope.places, scope.country);
-          scope.sort({ country: scope.country, place: {} });
+          scope.filter({ country: scope.country, place: {} });
         };
 
         scope.selectPlace = function() {
-          scope.sort({ country: scope.country, place: scope.place });
+          scope.filter({ country: scope.country, place: scope.place });
         };
       };
 
@@ -23,7 +23,7 @@
         scope: {
           countries: '=',
           places: '=',
-          sort: '&'
+          filter: '&'
         },
         link: link
       };
