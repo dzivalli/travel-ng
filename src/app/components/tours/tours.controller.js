@@ -31,5 +31,9 @@
     $scope.selectTours = function(country, place) {
       $scope.selectedTours = search.selectToursByCountryAndPlace(tours, country, place);
     };
+
+    $scope.displayRange = function(first, last) {
+      $scope.selectedTours = tours.slice(first, last)
+    }
   }
 })();

@@ -5,7 +5,6 @@
     .module('travelNg')
     .directive('dzPagination', function(_, itemsOnPage) {
       var link = function(scope) {
-        var allItems = null;
         scope.localChanges = false;
 
         scope.page = function(index) {
@@ -13,15 +12,16 @@
           var last = first + itemsOnPage;
 
           scope.localChanges = true;
-          scope.items = allItems.slice(first, last);
+          scope.displayRange({ first: first, last: last });
           scope.activePage = index;
         };
 
-        scope.$watch('items', function() {
-          if (scope.items && !scope.localChanges) {
-            var rangeMax = Math.ceil(scope.items.length / itemsOnPage);
+        scope.$watch('itemsCount', function() {
+          if (scope.itemsCount && !scope.localChanges) {
+            console.log(scope.itemsCount);
 
-            allItems = scope.items;
+            var rangeMax = Math.ceil(scope.itemsCount / itemsOnPage);
+
             scope.itemsRange = _.range(rangeMax);
             scope.page(0);
           } else {
@@ -34,7 +34,8 @@
         templateUrl: 'app/components/pagination/index.html',
         restrict: 'E',
         scope: {
-          items: '='
+          itemsCount: '@',
+          displayRange: '&'
         },
         link: link
       };
