@@ -4,25 +4,14 @@
   </div>
 
   <div class="col-sm-9">
-    <div class="form-inline">
-      <div class="form-group">
-        <label>Select country:</label>
-        <select class="form-control" ng-model="country" ng-options="country.name for country in countries track by country.objectId" ng-change="selectCountry()">
-          <option value="" selected>All countries</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Select place:</label>
-        <select class="form-control" ng-model="place" ng-options="place.name for place in placesByCountry track by place.objectId" ng-change="selectPlace()">
-          <option value="" selected>All places</option>
-        </select>
-      </div>
-    </div>
+    <tour-filter countries="countries"
+                 places="places"
+                 filter="selectTours(country, place)">
+    </tour-filter>
   </div>
 </div>
 
-<div class="tours-list" ng-repeat="tour in selectedTours">
+<div class="tours-list" ng-repeat="tour in toursOnPage">
   <div class="row">
     <div class="col-sm-4">
       <img src="assets/images/default.png">
@@ -71,3 +60,5 @@
     </div>
   </div>
 </div>
+
+<dz-pagination items-count="{{selectedTours.length}}" display-range="displayRange(first, last)"></dz-pagination>

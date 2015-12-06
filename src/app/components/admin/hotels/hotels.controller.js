@@ -5,7 +5,7 @@
     .module('travelNg')
     .controller('HotelsController', HotelsController);
 
-  function HotelsController($scope, Hotel, Tour, parseCom) {
+  function HotelsController($scope, Hotel, Tour, parseCom, _) {
     $scope.tours = Tour.query();
     $scope.hotels = Hotel.query();
 

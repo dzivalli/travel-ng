@@ -1,0 +1,15 @@
+<div class="form-inline">
+  <div class="form-group">
+    <label>Select country:</label>
+    <select class="form-control" ng-model="country" ng-options="country.name for country in countries track by country.objectId" ng-change="selectCountry()">
+      <option value="" selected>All countries</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Select place:</label>
+    <select class="form-control" ng-model="place" ng-options="place.name for place in placesByCountry track by place.objectId" ng-change="selectPlace()">
+      <option value="" selected>All places</option>
+    </select>
+  </div>
+</div>

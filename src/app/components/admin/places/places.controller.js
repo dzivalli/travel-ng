@@ -5,7 +5,7 @@
     .module('travelNg')
     .controller('PlacesController', PlacesController);
 
-  function PlacesController($scope, Place, Country, parseCom) {
+  function PlacesController($scope, Place, Country, parseCom, _) {
     $scope.places = Place.query();
     $scope.countries = Country.query();
 
