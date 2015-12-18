@@ -40,7 +40,7 @@
       </div>
 
       <div class="col-sm-4">
-        Stars: {{hotel.stars}}
+        <span ng-bind-html="hotel.stars | stars"></span>
       </div>
     </div>
 

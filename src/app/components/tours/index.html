@@ -48,7 +48,7 @@
         </div>
 
         <div class="col-sm-4">
-          Stars: {{getHotelByTourId(tour.objectId).stars}}
+          <span ng-bind-html="getHotelByTourId(tour.objectId).stars | stars"></span>
         </div>
       </div>
 
