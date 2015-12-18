@@ -1,7 +1,9 @@
 describe('Pagination', function () {
   'use strict';
 
-  beforeEach(module('travelNg'));
+  beforeEach(module('travelNg', function ($provide) {
+    $provide.constant('itemsOnPage', 2);
+  }));
 
   var $compile, $scope, paginationDirective, itemsOnPage, isolatedScope;
 
