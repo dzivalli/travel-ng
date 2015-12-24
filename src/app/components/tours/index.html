@@ -6,12 +6,12 @@
   <div class="col-sm-9">
     <tour-filter countries="countries"
                  places="places"
-                 filter="selectTours(country, place)">
+                 filter-obj="filterObj">
     </tour-filter>
   </div>
 </div>
 
-<div class="tours-list" ng-repeat="tour in toursOnPage">
+<div class="tours-list" ng-repeat="tour in toursOnPage | filter : filterObj">
   <div class="row">
     <div class="col-sm-4">
       <img src="assets/images/default.png">
@@ -61,4 +61,4 @@
   </div>
 </div>
 
-<dz-pagination items-count="{{selectedTours.length}}" display-range="displayRange(first, last)"></dz-pagination>
+<dz-pagination items-count="{{(selectedTours | filter : filterObj).length}}" display-range="displayRange(first, last)"></dz-pagination>
