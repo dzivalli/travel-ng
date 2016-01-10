@@ -6,10 +6,7 @@
     .directive('dzPagination', function(_, itemsOnPage) {
       var link = function(scope) {
         scope.page = function(index) {
-          var first = index * itemsOnPage;
-          var last = first + itemsOnPage;
-
-          scope.displayRange({ first: first, last: last });
+          scope.startItem = index * itemsOnPage;
           scope.activePage = index;
         };
 
@@ -28,7 +25,7 @@
         restrict: 'E',
         scope: {
           itemsCount: '@',
-          displayRange: '&'
+          startItem: '='
         },
         link: link
       };

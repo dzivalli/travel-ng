@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="tours-list" ng-repeat="tour in toursOnPage | filter : filterObj">
+<div class="tours-list" ng-repeat="tour in selectedTours | filter : filterObj | limitTo : itemsOnPage : startItem">
   <div class="row">
     <div class="col-sm-4">
       <img src="assets/images/default.png">
@@ -61,4 +61,4 @@
   </div>
 </div>
 
-<dz-pagination items-count="{{(selectedTours | filter : filterObj).length}}" display-range="displayRange(first, last)"></dz-pagination>
+<dz-pagination items-count="{{(selectedTours | filter : filterObj).length}}" start-item="startItem"></dz-pagination>
