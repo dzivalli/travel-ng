@@ -11,16 +11,16 @@
     $scope.countries = Country.query();
     var places = Place.query();
 
-    $scope.addTour = function(newTour) {
-      var tour = angular.copy(newTour);
-      tour.country = parseCom.pointer(newTour.country.objectId, 'country');
-      tour.place = parseCom.pointer(newTour.place.objectId, 'place');
+    $scope.addTour = function() {
+      var tour = angular.copy($scope.newTour);
+      tour.country = parseCom.pointer($scope.newTour.country.objectId, 'country');
+      tour.place = parseCom.pointer($scope.newTour.place.objectId, 'place');
       delete tour.edit;
 
       Tour.save(tour, function() {
         $scope.showNewForm = false;
         $scope.tours.push(tour);
-        newTour = {};
+        $scope.newTour = {};
       });
     };
 
@@ -47,9 +47,9 @@
       });
     };
 
-    $scope.cancelTour = function(newTour){
+    $scope.cancelTour = function(){
       $scope.showNewForm = false;
-      newTour = {};
+      $scope.newTour = {};
     };
 
     $scope.getPlace = function(objectId) {
