@@ -50,35 +50,29 @@ describe('AdminToursController', function() {
   });
 
   describe('addTour', function() {
+    var newTour = {
+      title: 'new tour',
+      description: 'new desc',
+      country: countries[0],
+      place: places[0]
+    };
+
     beforeEach(function() {
       $httpBackend.flush();
-      $scope.newTour = {
-        title: 'new tour',
-        description: 'new desc',
-        country: countries[0],
-        place: places[0]
-      };
       $httpBackend.whenPOST(url + 'Tour').respond(201);
     });
 
     it('sends post request', function() {
       $httpBackend.expectPOST(url + 'Tour');
-      $scope.addTour();
+      $scope.addTour(newTour);
       $httpBackend.flush();
       expect($httpBackend.verifyNoOutstandingExpectation).not.toThrow();
     });
 
     it('adds new tour to tours', function() {
-      $scope.addTour();
+      $scope.addTour(newTour);
       $httpBackend.flush();
       expect($scope.tours.length).toEqual(2);
-    });
-
-    it('sets variables to default state', function() {
-      $scope.addTour();
-      $httpBackend.flush();
-      expect($scope.showNewForm).toEqual(false);
-      expect($scope.newTour).toEqual({});
     });
   });
 
@@ -153,7 +147,6 @@ describe('AdminToursController', function() {
 
     it('sets variables to default', function() {
       expect($scope.showNewForm).toEqual(false);
-      expect($scope.newTour).toEqual({});
     });
   });
 });
