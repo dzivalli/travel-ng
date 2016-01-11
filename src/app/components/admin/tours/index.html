@@ -12,7 +12,69 @@
 
 <div class="tour-form" ng-show="showNewForm">
   <form name="newTourForm" novalidate>
-    <ng-include src="'app/components/admin/tours/new.html'"></ng-include>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input class="form-control" name="name" placeholder="Tour name" ng-model="newTour.title" required>
+          <div class="text-danger" ng-show="newTourForm.name.$touched && newTourForm.name.$error.required">Please input tour's name</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="number" name="duration" class="form-control" placeholder="Duration" ng-model="newTour.duration" required>
+          <div class="text-danger" ng-show="newTourForm.duration.$touched && newTourForm.duration.$error.required">Please input tour's duration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="number" name="cost" class="form-control" placeholder="Cost" ng-model="newTour.price" required>
+          <div class="text-danger" ng-show="newTourForm.cost.$touched && newTourForm.cost.$error.required">Please input tour's cost</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <select class="form-control" name="countryName" ng-model="newTour.country" ng-options="country.name for country in countries track by country.objectId" ng-change="selectCountry(newTour.country)" required>
+            <option value="" disabled selected>Select country</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <select class="form-control" name="placeName" ng-model="newTour.place" ng-options="place.name for place in placesByCountry track by place.objectId" required>
+            <option value="" disabled selected>Select place</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <textarea class="form-control" name="description" placeholder="Description" rows="4" ng-model="newTour.text" required></textarea>
+          <div class="text-danger" ng-show="newTourForm.description.$touched && newTourForm.description.$error.required">Please input tour's description</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 pull-right">
+        <button type="button" class="btn btn-default btn-block" ng-click="cancelTour()">Cancel</button>
+      </div>
+
+      <div class="col-sm-2 pull-right">
+        <button type="submit" class="btn btn-primary btn-block" ng-click="newTourForm.$valid && addTour()" ng-disabled="!newTourForm.$valid">Add</button>
+      </div>
+    </div>
   </form>
 </div>
 
