@@ -9,11 +9,12 @@
 
         scope.selectCountry = function() {
           scope.placesByCountry = search.selectPlacesByCountry(scope.places, scope.country);
-          scope.filter({ country: scope.country, place: {} });
+          scope.country ? scope.filterObj.country.objectId = scope.country.objectId : scope.filterObj.country = {};
         };
 
         scope.selectPlace = function() {
-          scope.filter({ country: scope.country, place: scope.place });
+          scope.country && (scope.filterObj.country.objectId = scope.country.objectId);
+          scope.place ? scope.filterObj.place.objectId = scope.place.objectId : scope.filterObj.place = {};
         };
       };
 
@@ -23,7 +24,7 @@
         scope: {
           countries: '=',
           places: '=',
-          filter: '&'
+          filterObj: '='
         },
         link: link
       };

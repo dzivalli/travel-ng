@@ -7,9 +7,8 @@ describe('filter', function () {
       $scope,
       filterDirective, search;
 
-
   function compileDirective() {
-    var element = angular.element('<tour-filter countries="countries" places="places" filter="filter(country, place)"></tour-filter>');
+    var element = angular.element('<tour-filter countries="countries" places="places" filter-obj="filterObj"></tour-filter>');
     var compiledElement = $compile(element)($scope);
     $scope.$digest();
 
@@ -21,7 +20,7 @@ describe('filter', function () {
     $scope = $rootScope.$new();
     $scope.countries = ['country'];
     $scope.places = ['place'];
-    $scope.filter = jasmine.createSpy('filter');
+    $scope.filterObj= {country: {}, place: {}};
     search = _search_;
     spyOn(search, 'selectPlacesByCountry');
 
@@ -77,41 +76,70 @@ describe('filter', function () {
       });
     });
 
-    describe('filter function', function () {
-      it('is defined', function () {
-        expect(typeof(isolatedScope.filter)).toBe('function');
+    describe('filterObj 2 way binding', function () {
+      it('sets proper value', function () {
+        expectValuesToBeEqual('filterObj');
       });
 
-      it('calls function from parent scope', function () {
-        isolatedScope.filter({country: 'country', place: 'place'});
-        expect($scope.filter).toHaveBeenCalledWith('country', 'place');
+      it('changes values of both variables from directive', function () {
+        isolatedScope.filterObj = {test: 1};
+        expectValuesToBeEqual('filterObj');
+      });
+
+      it('changes values of both variables from parent scope', function () {
+        $scope.filterObj = {test: 2};
+        expectValuesToBeEqual('filterObj');
       });
     });
 
     describe('link functions', function () {
-      beforeEach(function () {
-        isolatedScope.country = 'country';
-        isolatedScope.place = 'place';
-      });
-
       describe('selectCountry', function () {
-        beforeEach(function () {
-          isolatedScope.selectCountry();
-        });
-
-        it('calls filter function', function () {
-          expect($scope.filter).toHaveBeenCalledWith('country', {});
-        });
-
         it('calls placeByCountry search', function () {
+          isolatedScope.country = 'country';
+          isolatedScope.place = 'place';
+          isolatedScope.selectCountry();
+
           expect(search.selectPlacesByCountry).toHaveBeenCalledWith(['place'], 'country');
+        });
+
+        describe('when one country is selected', function () {
+          it('sets filterObj with id of selected country', function () {
+            isolatedScope.country = {objectId: '123'};
+            isolatedScope.selectCountry();
+
+            expect($scope.filterObj).toEqual({country: {objectId: '123'}, place: {}});
+          });
+        });
+
+        describe('when all countries are selected', function () {
+          it('assigns empty objects to country and place', function () {
+            isolatedScope.country = null;
+            isolatedScope.selectCountry();
+
+            expect($scope.filterObj).toEqual({country: {}, place: {}});
+          });
         });
       });
 
       describe('selectPlace', function () {
-        it('calls filter function', function () {
-          isolatedScope.selectPlace();
-          expect($scope.filter).toHaveBeenCalledWith('country', 'place');
+        describe('when place is selected', function () {
+          it('sets filterObj with ids of selected country and place', function () {
+            isolatedScope.country = {objectId: 'countryId'};
+            isolatedScope.place = {objectId: 'placeId'};
+            isolatedScope.selectPlace();
+
+            expect($scope.filterObj).toEqual({country: {objectId: 'countryId'}, place: {objectId: 'placeId'}});
+          });
+        });
+
+        describe('when all places are selected', function () {
+          it('sets filterObj with id of selected country', function () {
+            isolatedScope.country = {objectId: 'countryId'};
+            isolatedScope.place = null;
+            isolatedScope.selectPlace();
+
+            expect($scope.filterObj).toEqual({country: {objectId: 'countryId'}, place: {}});
+          });
         });
       });
     });

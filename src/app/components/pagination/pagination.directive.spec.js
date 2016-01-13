@@ -1,7 +1,9 @@
 describe('Pagination', function () {
   'use strict';
 
-  beforeEach(module('travelNg'));
+  beforeEach(module('travelNg', function ($provide) {
+    $provide.constant('itemsOnPage', 2);
+  }));
 
   var $compile, $scope, paginationDirective, itemsOnPage, isolatedScope;
 
@@ -53,13 +55,6 @@ describe('Pagination', function () {
         expect(isolatedScope.itemsCount).not.toEqual($scope.selectedTours.length.toString());
       });
     });
-
-    describe('displayRange', function () {
-      it('calls appropriate function', function() {
-        isolatedScope.displayRange({first: 1, last: 2});
-        expect($scope.displayRange).toHaveBeenCalledWith(1, 2);
-      });
-    });
   });
 
   describe('link functions', function () {
@@ -73,12 +68,6 @@ describe('Pagination', function () {
 
       it('assigns current page number to activePage', function() {
         expect(isolatedScope.activePage).toEqual(pageNumber);
-      });
-
-      it('calls displayRange', function() {
-        var itemStartNumber = itemsOnPage * pageNumber;
-
-        expect($scope.displayRange).toHaveBeenCalledWith(itemStartNumber, itemStartNumber + itemsOnPage);
       });
     });
 

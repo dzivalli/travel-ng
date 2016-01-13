@@ -1,0 +1,15 @@
+<nav class="navbar navbar-default navbar-static-topp">
+  <a class="navbar-brand" href="/">Travel-NG (admin)</a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li ng-repeat="tab in tabs" ng-class="{active:isActive(tab)}">
+        <a href="/admin/{{tab | lowercase}}">{{tab}}</a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/">Public area</a></li>
+    </ul>
+  </div>
+</nav>

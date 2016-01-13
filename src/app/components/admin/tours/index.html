@@ -1,3 +1,5 @@
+<dz-navbar tab="tours"></dz-navbar>
+
 <div class="row">
   <div class="col-sm-3">
     <h3>Travel-NG</h3>
@@ -8,67 +10,7 @@
   </div>
 </div>
 
-<div class="tour-form" ng-show="showNewForm">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-group">
-        <input class="form-control" placeholder="Tour name" ng-model="newTour.title">
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <input type="number" class="form-control" placeholder="Duration" ng-model="newTour.duration">
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <input type="number" class="form-control" placeholder="Cost" ng-model="newTour.price">
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <select class="form-control" ng-model="newTour.country" ng-options="country.name for country in countries track by country.objectId" ng-change="selectCountry(newTour.country)">
-          <option value="" disabled selected>Select country</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="col-sm-4">
-      <div class="form-group">
-        <select class="form-control" ng-model="newTour.place" ng-options="place.name for place in placesByCountry track by place.objectId">
-          <option value="" disabled selected>Select place</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <textarea class="form-control" placeholder="Description" rows="4" ng-model="newTour.text"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-2 pull-right">
-      <button type="button" class="btn btn-default btn-block" ng-click="cancelTour($index)">Cancel</button>
-    </div>
-
-    <div class="col-sm-2 pull-right">
-      <button type="button" class="btn btn-primary btn-block" ng-click="addTour()">Add</button>
-    </div>
-  </div>
-</div>
+<div class="tour-form" ng-if="showNewForm" ng-include="'app/components/admin/tours/tour_form.html'"></div>
 
 <div class="tours-list" ng-repeat="tour in tours">
   <div class="row">

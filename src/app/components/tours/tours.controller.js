@@ -5,9 +5,12 @@
     .module('travelNg')
     .controller('ToursController', ToursController);
 
-  function ToursController($scope, Tour, Country, Place, Hotel, search, _, itemsOnPage) {
+  function ToursController($scope, Tour, Country, Place, Hotel, _, itemsOnPage) {
+    $scope.filterObj = {country: {}, place: {}};
+    $scope.startItem ;
+    $scope.itemsOnPage = itemsOnPage;
 
-    var tours = Tour.query(function(data){
+    Tour.query(function(data){
       $scope.selectedTours = data;
     });
 
@@ -26,15 +29,6 @@
 
     $scope.getHotelByTourId = function(objectId) {
       return _.find(hotels, {tour: {objectId: objectId}});
-    };
-
-    $scope.selectTours = function(country, place) {
-      $scope.selectedTours = search.selectToursByCountryAndPlace(tours, country, place);
-      $scope.displayRange(0, itemsOnPage);
-    };
-
-    $scope.displayRange = function(first, last) {
-      $scope.toursOnPage = $scope.selectedTours.slice(first, last);
     };
   }
 })();
