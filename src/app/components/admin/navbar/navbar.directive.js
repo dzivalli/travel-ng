@@ -13,6 +13,7 @@
         tab: '@'
       },
       link: function(scope) {
+        scope.tabs = ['Tours', 'Countries', 'Places', 'Hotels'];
         scope.isActive = function(tabName) {
           return scope.tab === tabName;
         };
