@@ -12,7 +12,7 @@
 <div class="tours-list" ng-repeat="tour in selectedTours | filter : filterObj | limitTo : itemsOnPage : startItem">
   <div class="row">
     <div class="col-sm-4">
-      <img src="assets/images/default.png">
+      <img ng-src="{{tour.imageUrl()}}" width="200">
     </div>
 
     <div class="col-sm-8">
