@@ -33,7 +33,7 @@
       save: function(params) {
         var deferred =  $q.defer();
 
-        $http.post(baseUrl + 'Tour/', params).then(function (data) {
+        $http.post(baseUrl + 'Tour', params).then(function (data) {
           params.objectId = data.data.objectId;
           var tour = new Tour(params);
           deferred.resolve(tour);
