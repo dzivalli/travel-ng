@@ -59,7 +59,7 @@ describe('AdminToursController', function() {
 
     beforeEach(function() {
       $httpBackend.flush();
-      $httpBackend.whenPOST(url + 'Tour').respond(201);
+      $httpBackend.whenPOST(url + 'Tour').respond(201, newTour);
     });
 
     it('sends post request', function() {

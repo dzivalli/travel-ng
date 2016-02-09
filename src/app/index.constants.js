@@ -8,6 +8,6 @@
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('_', _)
-    .constant('itemsOnPage', 5);
-
+    .constant('itemsOnPage', 5)
+    .constant('baseUrl', 'https://api.parse.com/1/classes/');
 })();

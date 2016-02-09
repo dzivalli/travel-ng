@@ -5,26 +5,26 @@
     .module('travelNg')
     .controller('AdminToursController', AdminToursController);
 
-  function AdminToursController($scope, Tour, Country, Place, parseCom, _) {
+  function AdminToursController($scope, ToursCollection, Country, Place, parseCom, _) {
     $scope.showNewForm = false;
-    $scope.tours = Tour.query();
+    $scope.tours = ToursCollection.all();
     $scope.countries = Country.query();
     var places = Place.query();
 
     $scope.addTour = function(newTour) {
-      var tour = angular.copy(newTour);
-      tour.country = parseCom.pointer(newTour.country.objectId, 'country');
-      tour.place = parseCom.pointer(newTour.place.objectId, 'place');
-      delete tour.edit;
+      var tourParams = angular.copy(newTour);
+      tourParams.country = parseCom.pointer(newTour.country.objectId, 'country');
+      tourParams.place = parseCom.pointer(newTour.place.objectId, 'place');
+      delete tourParams.edit;
 
-      Tour.save(tour, function() {
+      ToursCollection.save(tourParams).then(function(tour) {
         $scope.showNewForm = false;
         $scope.tours.push(tour);
       });
     };
 
     $scope.deleteTour = function(index) {
-      Tour.delete({objectId: $scope.tours[index].objectId}, function() {
+      ToursCollection.delete($scope.tours[index].objectId).then(function() {
         $scope.tours.splice(index, 1);
       });
     };
@@ -35,13 +35,13 @@
     };
 
     $scope.saveTour = function(index) {
-      var tour = angular.copy($scope.editedTour);
-      tour.country = parseCom.pointer($scope.editedTour.country.objectId, 'country');
-      tour.place = parseCom.pointer($scope.editedTour.place.objectId, 'place');
-      delete tour.edit;
+      var tourParams = angular.copy($scope.editedTour);
+      tourParams.country = parseCom.pointer($scope.editedTour.country.objectId, 'country');
+      tourParams.place = parseCom.pointer($scope.editedTour.place.objectId, 'place');
+      delete tourParams.edit;
 
-      Tour.update(tour, function() {
-        $scope.tours[index] = angular.copy(tour);
+      ToursCollection.update(tourParams).then(function(updatedTour) {
+        $scope.tours[index] = updatedTour;
         $scope.tours[index].edit = false;
       });
     };

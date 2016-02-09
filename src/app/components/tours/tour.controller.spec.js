@@ -24,10 +24,15 @@ describe('TourController', function() {
   var country = {name: 'Country 1', objectId: 'c1'};
   var hotels_result = {results: [{title: 'Hotel 1', objectId: 'h1'}]};
 
-  beforeEach(inject(function($controller) {
+
+  beforeEach(inject(function($controller, $q, $rootScope) {
+    $scope = $rootScope.$new();
+
     var TourMock = {
-      get: function(params, callback) {
-        callback(tour);
+      get: function() {
+        tour.$deferred = $q.defer();
+        tour.$deferred.resolve();
+
         return tour;
       }
     };
@@ -53,7 +58,7 @@ describe('TourController', function() {
     tourController = $controller('TourController',
       {
         $scope: $scope,
-        Tour: TourMock,
+        ToursCollection: TourMock,
         Place: PlaceMock,
         Country: CountryMock,
         Hotel: HotelMock
@@ -62,6 +67,10 @@ describe('TourController', function() {
   }));
 
   describe('initialize', function() {
+    beforeEach(function() {
+      $scope.$apply();
+    });
+
     it('gets tour', function() {
       expect($scope.tour).toEqual(tour);
     });
