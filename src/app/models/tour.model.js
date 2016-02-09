@@ -12,11 +12,7 @@
       angular.extend(self, params);
 
       self.imageUrl = function() {
-        if (self.image) {
-          return self.image.url;
-        } else {
-          return 'assets/images/default.png';
-        }
+        return !!self.image ? self.image.url :  'assets/images/default.png';
       }
     };
 

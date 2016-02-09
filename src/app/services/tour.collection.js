@@ -10,8 +10,8 @@
       all: function () {
         var tours = [];
 
-        $http.get(baseUrl + 'Tour').then(function (data) {
-          angular.forEach(data.data.results, function(value) {
+        $http.get(baseUrl + 'Tour').then(function (response) {
+          angular.forEach(response.data.results, function(value) {
             tours.push(new Tour(value));
           });
         });
@@ -20,21 +20,22 @@
       },
 
       get: function(id) {
-        var deferred =  $q.defer();
+        var tour =  {};
+        tour.$deferred = $q.defer();
 
-        $http.get(baseUrl + 'Tour/' + id).then(function (data) {
-          var tour = new Tour(data.data);
-          deferred.resolve(tour);
+        $http.get(baseUrl + 'Tour/' + id).then(function (response) {
+          tour = angular.extend(tour, new Tour(response.data));
+          tour.$deferred.resolve();
         });
 
-        return deferred.promise;
+        return tour;
       },
 
       save: function(params) {
         var deferred =  $q.defer();
 
-        $http.post(baseUrl + 'Tour', params).then(function (data) {
-          params.objectId = data.data.objectId;
+        $http.post(baseUrl + 'Tour', params).then(function (response) {
+          params.objectId = response.data.objectId;
           var tour = new Tour(params);
           deferred.resolve(tour);
         });

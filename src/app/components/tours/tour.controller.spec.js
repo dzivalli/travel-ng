@@ -30,10 +30,10 @@ describe('TourController', function() {
 
     var TourMock = {
       get: function() {
-        var tourDefer = $q.defer();
-        tourDefer.resolve(tour);
+        tour.$deferred = $q.defer();
+        tour.$deferred.resolve();
 
-        return tourDefer.promise;
+        return tour;
       }
     };
 

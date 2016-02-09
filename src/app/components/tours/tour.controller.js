@@ -6,11 +6,12 @@
     .controller('TourController', TourController);
 
   function TourController($scope, $routeParams, Country, Place, Hotel, parseCom, ToursCollection) {
-    ToursCollection.get($routeParams.slug).then(function(data) {
-      $scope.tour = data;
-      $scope.country = Country.get({objectId: data.country.objectId});
-      $scope.place = Place.get({objectId: data.place.objectId});
-      Hotel.get(parseCom.objectByTour(data.objectId), function(data) {
+    $scope.tour = ToursCollection.get($routeParams.slug);
+
+    $scope.tour.$deferred.promise.then(function() {
+      $scope.country = Country.get({objectId: $scope.tour.country.objectId});
+      $scope.place = Place.get({objectId: $scope.tour.place.objectId});
+      Hotel.get(parseCom.objectByTour($scope.tour.objectId), function(data) {
         $scope.hotel = data.results[0];
       });
     });
