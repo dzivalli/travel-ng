@@ -1,62 +1,61 @@
 <ng-include src="'app/components/tours/navbar.html'"></ng-include>
 
 <div class="row">
-  <div class="col-sm-offset-3 col-sm-9">
-    <tour-filter countries="countries"
-                 places="places"
-                 filter-obj="filterObj">
-    </tour-filter>
-  </div>
-</div>
+  <tour-filter countries="countries" places="places" filter-obj="filterObj">
+    <div class="tours-list" ng-repeat="tour in selectedTours | filter : filterObj | limitTo : itemsOnPage : startItem">
+        <div class="row">
+          <div class="col-sm-4">
+            <img ng-src="{{tour.imageUrl()}}" width="200">
+          </div>
 
-<div class="tours-list" ng-repeat="tour in selectedTours | filter : filterObj | limitTo : itemsOnPage : startItem">
-  <div class="row">
-    <div class="col-sm-4">
-      <img ng-src="{{tour.imageUrl()}}" width="200">
-    </div>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-4">
+                <h4>
+                  <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
+                </h4>
+              </div>
 
-    <div class="col-sm-8">
-      <div class="row">
-        <div class="col-sm-4">
-          <h4>
-            <a ng-href="tours/{{tour.objectId}}">{{tour.title}}</a>
-          </h4>
-        </div>
+              <div class="col-sm-2">
+                <a href="" tour-filter-by="tour.country">
+                  <span class="label label-primary">{{getCountry(tour.country.objectId).name}}</span>
+                </a>
+              </div>
 
-        <div class="col-sm-2">
-          <span class="label label-primary">{{getCountry(tour.country.objectId).name}}</span>
-        </div>
+              <div class="col-sm-2">
+                <a href="" tour-filter-by="tour.place">
+                  <span class="label label-warning">{{getPlace(tour.place.objectId).name}}</span>
+                </a>
+              </div>
 
-        <div class="col-sm-2">
-          <span class="label label-warning">{{getPlace(tour.place.objectId).name}}</span>
-        </div>
+              <div class="col-sm-2 ">
+                <div>duration: {{tour.duration}}</div>
+              </div>
 
-        <div class="col-sm-2 ">
-          <div>duration: {{tour.duration}}</div>
-        </div>
+              <div class="col-sm-1 pull-right">
+                <div>{{tour.price}}</div>
+              </div>
+            </div>
 
-        <div class="col-sm-1 pull-right">
-          <div>{{tour.price}}</div>
+            <div class="row" ng-show="getHotelByTourId(tour.objectId)">
+              <div class="col-sm-4">
+                <strong>{{getHotelByTourId(tour.objectId).title}}</strong>
+              </div>
+
+              <div class="col-sm-4">
+                <span ng-bind-html="getHotelByTourId(tour.objectId).stars | stars"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div>{{tour.text | shrink : 10}}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="row" ng-show="getHotelByTourId(tour.objectId)">
-        <div class="col-sm-4">
-         <strong>{{getHotelByTourId(tour.objectId).title}}</strong>
-        </div>
-
-        <div class="col-sm-4">
-          <span ng-bind-html="getHotelByTourId(tour.objectId).stars | stars"></span>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div>{{tour.text | shrink : 10}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </tour-filter>
 </div>
 
 <dz-pagination items-count="{{(selectedTours | filter : filterObj).length}}" start-item="startItem"></dz-pagination>

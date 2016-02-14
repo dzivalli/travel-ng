@@ -3,30 +3,34 @@
 
   angular
     .module('travelNg')
-    .directive('tourFilter', function(search) {
-      var link = function(scope) {
-        scope.placesByCountry = {};
+    .directive('tourFilter', tourFilter);
 
-        scope.selectCountry = function() {
-          scope.placesByCountry = search.selectPlacesByCountry(scope.places, scope.country);
-          scope.country ? scope.filterObj.country.objectId = scope.country.objectId : scope.filterObj.country = {};
-        };
+  function tourFilter(search) {
+    var link = function(scope) {
+      scope.placesByCountry = {};
 
-        scope.selectPlace = function() {
-          scope.country && (scope.filterObj.country.objectId = scope.country.objectId);
-          scope.place ? scope.filterObj.place.objectId = scope.place.objectId : scope.filterObj.place = {};
-        };
+      scope.selectCountry = function() {
+        scope.placesByCountry = search.selectPlacesByCountry(scope.places, scope.country);
+        scope.country ? scope.filterObj.country.objectId = scope.country.objectId : scope.filterObj.country = {};
       };
 
-      return {
-        templateUrl: 'app/components/filter/index.html',
-        restrict: 'E',
-        scope: {
-          countries: '=',
-          places: '=',
-          filterObj: '='
-        },
-        link: link
+      scope.selectPlace = function() {
+        scope.country && (scope.filterObj.country.objectId = scope.country.objectId);
+        scope.place ? scope.filterObj.place.objectId = scope.place.objectId : scope.filterObj.place = {};
       };
-    });
+    };
+
+    return {
+      templateUrl: 'app/components/filter/index.html',
+      restrict: 'E',
+      controller: 'tourFilterCtrl',
+      transclude: true,
+      scope: {
+        countries: '=',
+        places: '=',
+        filterObj: '='
+      },
+      link: link
+    };
+  }
 })();
