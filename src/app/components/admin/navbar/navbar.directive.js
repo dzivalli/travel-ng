@@ -18,6 +18,6 @@
           return scope.tab === tabName;
         };
       }
-    }
+    };
   }
 })();

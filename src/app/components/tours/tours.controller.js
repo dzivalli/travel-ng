@@ -7,7 +7,7 @@
 
   function ToursController($scope, ToursCollection, Country, Place, Hotel, _, itemsOnPage) {
     $scope.filterObj = {country: {}, place: {}};
-    $scope.startItem ;
+    $scope.startItem;
     $scope.itemsOnPage = itemsOnPage;
     $scope.selectedTours = ToursCollection.all();
     $scope.countries = Country.query();
