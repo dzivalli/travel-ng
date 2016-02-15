@@ -3,7 +3,24 @@
 
   angular
     .module('travelNg')
-    .directive('tourFilter', tourFilter);
+    .directive('tourFilter', tourFilter)
+    .controller('tourFilterCtrl', tourFilterCtrl);
+
+  function tourFilterCtrl($scope) {
+    this.filterBy = function (object) {
+      switch (object.className) {
+        case 'Country':
+          $scope.country = object;
+          $scope.place = {};
+          $scope.selectCountry();
+          break;
+        case 'Place':
+          $scope.place = object;
+          break;
+      }
+      $scope.selectPlace();
+    }
+  }
 
   function tourFilter(search) {
     var link = function(scope) {
